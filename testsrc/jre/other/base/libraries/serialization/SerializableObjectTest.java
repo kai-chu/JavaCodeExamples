@@ -2,6 +2,9 @@ package jre.other.base.libraries.serialization;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +20,12 @@ public class SerializableObjectTest {
 
 	@Before
 	public void before() {
+		try {
+			Files.deleteIfExists(Paths.get(FILE_PATH));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		objectList = new ArrayList<SerializableObject>();
 		
 		Arrays.asList(names).stream().forEach(name -> {
@@ -26,12 +35,16 @@ public class SerializableObjectTest {
 	}
 
 	@Test
+	public void test() {
+		testSerialize();
+		testDeserialize();
+	}
+	
 	public void testSerialize() {
 		SerializableExample.serialize(objectList, FILE_PATH);
 		
 	}
 	
-	@Test
 	public void testDeserialize() {
 		List<SerializableObject> objectList = SerializableExample.deserialize(FILE_PATH);
 		assertTrue("Something wrong",names.length == objectList.size());
