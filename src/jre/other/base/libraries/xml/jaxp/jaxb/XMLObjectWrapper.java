@@ -2,19 +2,26 @@ package jre.other.base.libraries.xml.jaxp.jaxb;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+@XmlRootElement(name="XMLRoot")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class XMLObjectWrapper {
 	
-	
-	private List<XMLObject> xmlObjectList = null;
+	@XmlElementWrapper(name="xmlObjectList")
+	@XmlElements({
+		@XmlElement(name="xmlObject")
+	})
+	private List<XMLObject> m_xmlObjectList = null;
 	
 	
 	public XMLObjectWrapper(List<XMLObject> inList) {
-		xmlObjectList = inList;
+		m_xmlObjectList = inList;
 	}
 	
 	public XMLObjectWrapper() {
@@ -22,13 +29,12 @@ public class XMLObjectWrapper {
 	}
 
 	public List<XMLObject> getXmlObjectList() {
-		return xmlObjectList;
+		return m_xmlObjectList;
 	}
 
-	@XmlElementWrapper
-	@XmlElement(name="xmlObject")
+	
 	public void setXmlObjectList(List<XMLObject> xmlObjectList) {
-		this.xmlObjectList = xmlObjectList;
+		this.m_xmlObjectList = xmlObjectList;
 	}
 
 }
